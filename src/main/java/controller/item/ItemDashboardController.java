@@ -82,7 +82,11 @@ public class ItemDashboardController implements Initializable {
         colQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         colUnit.setCellValueFactory(new PropertyValueFactory<>("price"));
 
+        loadItemDetails();
 
+    }
+
+    private void loadItemDetails() {
 
     }
 }
