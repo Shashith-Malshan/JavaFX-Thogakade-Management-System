@@ -1,5 +1,7 @@
 package controller.item;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,11 +12,15 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.dto.ItemDto;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ItemDashboardController implements Initializable {
+
+    ItemService itemService=new ItemController();
+    ObservableList<ItemDto> itemDtos=FXCollections.observableArrayList();
 
     @FXML
     private Button btnAdd;
@@ -26,7 +32,7 @@ public class ItemDashboardController implements Initializable {
     private Button btnUpdate;
 
     @FXML
-    private ComboBox<?> cmbCategory;
+    private ComboBox<String> cmbCategory;
 
     @FXML
     private TableColumn<?, ?> colCategory;
@@ -44,7 +50,7 @@ public class ItemDashboardController implements Initializable {
     private TableColumn<?, ?> colUnit;
 
     @FXML
-    private TableView<?> tblItem;
+    private TableView<ItemDto> tblItem;
 
     @FXML
     private TextArea txtDescription;
@@ -60,16 +66,35 @@ public class ItemDashboardController implements Initializable {
 
     @FXML
     void addOnAction(ActionEvent event) {
+         String itemCode=txtItem.getText();
+         String description=txtDescription.getText();
+         String category=cmbCategory.getValue();
+         int quantity= Integer.parseInt(txtQuantity.getText());
+         double price=Double.parseDouble(txtUnit.getText());
+
+         itemService.AddItem(itemCode,description,category,quantity,price);
+
 
     }
 
     @FXML
     void deleteOnAction(ActionEvent event) {
+        String itemCode=txtItem.getText();
+        itemService.DeleteItem(itemCode);
+
 
     }
 
     @FXML
     void updateOnAction(ActionEvent event) {
+
+        String itemCode=txtItem.getText();
+        String description=txtDescription.getText();
+        String category=cmbCategory.getValue();
+        int quantity= Integer.parseInt(txtQuantity.getText());
+        double price=Double.parseDouble(txtUnit.getText());
+
+        itemService.UpdateItem(description,category,quantity,price,itemCode);
 
     }
 
@@ -84,9 +109,12 @@ public class ItemDashboardController implements Initializable {
 
         loadItemDetails();
 
+        ObservableList<String> category= FXCollections.observableArrayList("Grocery","Meat","Seafood","Fruits");
+        cmbCategory.setItems(category);
+
     }
 
     private void loadItemDetails() {
-
+       tblItem.setItems(itemService.getAllValue(itemDtos));
     }
 }

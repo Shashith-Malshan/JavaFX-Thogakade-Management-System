@@ -1,4 +1,4 @@
-package controller;
+package controller.supplier;
 
 public class SupplierDashboardController {
 }
