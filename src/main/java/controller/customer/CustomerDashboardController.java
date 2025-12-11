@@ -191,6 +191,9 @@ public class CustomerDashboardController implements Initializable {
         txtProvince.setValue(null);
         txtPostalCode.clear();
     }
+    private void emptyMethod(){
+        System.out.println("Test_empty");
+    }
 
     private void setSelectedValue(CustomerDto selectedValue){
         if(selectedValue == null){
